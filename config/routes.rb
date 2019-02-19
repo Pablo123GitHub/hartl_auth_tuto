@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   #
   post 'signup', to: 'users#create'
 
+  root to: 'users#index'
+
   resources :users
   
 end
