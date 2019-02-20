@@ -36,6 +36,17 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
+  test "name and email combination should be unique" do    
+    duplicate_user = @user.dup
+    @user.save
+    assert_not duplicate_user.valid?
+  end 
 
+  test "same name but different email should be OK" do   
+    duplicate_user = @user.dup
+    duplicate_user.email = "something@email.com"
+    @user.save
+    assert duplicate_user.valid?
+  end 
 
 end
