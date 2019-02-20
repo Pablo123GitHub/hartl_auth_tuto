@@ -6,8 +6,14 @@ class User < ApplicationRecord
     validates :email, presence: true,
      uniqueness: {case_sensitive: false}
     validates :password, presence: true, length: { minimum: 6} 
-    validate :unique_name_email_combination
+    # validate :unique_name_email_combination
+    validate :different_password, on: :update
 
+    def different_password
+        if User.find_by(email: email).authenticate(password)
+            errors.add(:must_be_different, "different password required")
+        end 
+    end 
 
     def unique_name_email_combination 
        if User.find_by(email: email, name: name) 

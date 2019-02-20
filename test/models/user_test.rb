@@ -49,4 +49,17 @@ class UserTest < ActiveSupport::TestCase
     assert duplicate_user.valid?
   end 
 
+  test "updated password should be different from existing one" do    
+    @user.save
+    last_user = User.last
+    last_user.update_attributes(
+      name: @user.name,
+      email: @user.email,
+      password: @user.password,
+      password_confirmation: @user.password_confirmation
+    )
+
+    assert_not last_user.valid?
+  end 
+
 end
